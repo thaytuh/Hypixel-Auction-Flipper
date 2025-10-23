@@ -54,15 +54,19 @@ async function getParsed(encoded) {
 
 function getProfit(price, rcCost, lbin) {
     const profitItem = {}
+
+    if (isNaN(price) || isNaN(rcCost) || isNaN(lbin)) {
+        console.log(`[DEBUG] getProfit: Invalid input values! price=${price}, rcCost=${rcCost}, lbin=${lbin}`);
+        return { RCProfit: 0, RCPP: 0, snipeProfit: 0, snipePP: 0 };
+    }
+
     if (price >= 1000000) {
-        profitItem.RCProfit = ((lbin + rcCost) - price)
-            - ((lbin + rcCost) * 0.02);
+        profitItem.RCProfit = ((lbin + rcCost) - price) - ((lbin + rcCost) * 0.02);
         profitItem.RCPP = parseFloat(((profitItem.RCProfit * 100) / lbin).toFixed(1))
         profitItem.snipeProfit = (lbin - price) - (lbin * 0.02)
         profitItem.snipePP = parseFloat(((profitItem.snipeProfit * 100) / lbin).toFixed(1))
     } else {
-        profitItem.RCProfit = ((lbin + rcCost) - price)
-            - ((lbin + rcCost) * 0.01);
+        profitItem.RCProfit = ((lbin + rcCost) - price) - ((lbin + rcCost) * 0.01);
         profitItem.RCPP = parseFloat(((profitItem.RCProfit * 100) / lbin).toFixed(1))
         profitItem.snipeProfit = (lbin - price) - (lbin * 0.01)
         profitItem.snipePP = parseFloat(((profitItem.snipeProfit * 100) / lbin).toFixed(1))
@@ -91,11 +95,11 @@ function splitNumber (num = 1, parts = 1) {
 function getRawCraft(item, bazaarPrice, lbins) {
     let price = 0
     const ignoreMatch = Object.keys(config.filters.rawCraftIgnoreEnchants).find((key) => {
-        if (item.itemData.id.includes(key)) return true
+        if (item.itemID.includes(key)) return true
     })
     if (item.auctionData.lbin < config.data.minPriceForRawcraft) return 0
     let isInIgnore = ignoreMatch ? ignoreMatch : false
-    if (item.itemData.enchants && !item.itemData.id.includes(';')) {
+    if (item.itemData.enchants && !item.itemID.includes(';')) {
         for (const enchant of Object.keys(item.itemData.enchants)) {
             const degree = item.itemData.enchants[enchant]
             const badEnchant = typeof config.filters.badEnchants[enchant] === 'number' ? degree >= config.filters.badEnchants[enchant] : false

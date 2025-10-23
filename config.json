@@ -2,7 +2,7 @@
   "data": {
     "threadsToUse/speed": 48,
 
-    "minSnipeProfit": 900000,
+    "minSnipeProfit": 600000,
     "minAvgProfit": 500000,
     "minCraftProfit": 500000,
 
@@ -21,12 +21,8 @@
     },
     "minSales": 4,
     "includeCraftCost": true,
-    "minPriceForRawcraft": 5000000
-  },
-  "webhook": {
-    "discordWebhookUrl": "WEBHOOK_URL",
-    "webhookName": "Flipper",
-    "webhookPFP": "https://cdn.discordapp.com/avatars/486155512568741900/164084b936b4461fe9505398f7383a0e.png?size=4096"
+    "minPriceForRawcraft": 5000000,
+    "discordEnabled": true
   },
   "filters": {
     "rawCraftIgnoreEnchants": {
