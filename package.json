@@ -7,7 +7,14 @@
     "start": "node .",
     "dev": "node .",
     "test:webhook": "node test-webhook.js",
-    "setup": "./setup.sh"
+    "setup": "./setup.sh",
+    "pm2:start": "pm2 start index.js --name \"auction-flipper\"",
+    "pm2:stop": "pm2 stop auction-flipper",
+    "pm2:restart": "pm2 restart auction-flipper",
+    "pm2:delete": "pm2 delete auction-flipper",
+    "pm2:logs": "pm2 logs auction-flipper",
+    "pm2:status": "pm2 status",
+    "pm2:monitor": "pm2 monit"
   },
   "keywords": [
     "hypixel",
@@ -25,7 +32,6 @@
     "dotenv": "^17.2.3",
     "prismarine-nbt": "^2.0.0"
   },
-  "devDependencies": {},
   "engines": {
     "node": ">=18.0.0"
   }

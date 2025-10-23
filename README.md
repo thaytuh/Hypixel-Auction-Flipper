@@ -51,6 +51,89 @@ Edit `config.json` to customize **bot behavior settings** (profit thresholds, fi
 npm start
 ```
 
+## 🚀 Background Deployment (Server Setup)
+
+### Using PM2 (Recommended)
+
+#### Install PM2
+```bash
+npm install -g pm2
+```
+
+#### Quick Start
+```bash
+# Setup environment
+npm run setup
+
+# Start in background
+npm run pm2:start
+
+# Check status
+npm run pm2:status
+
+# View logs
+npm run pm2:logs
+```
+
+#### Server Deployment Script
+```bash
+# Use the automated server script
+chmod +x start-server.sh
+./start-server.sh
+```
+
+#### Manual PM2 Commands
+```bash
+# Start the bot
+pm2 start index.js --name "auction-flipper"
+
+# Or use ecosystem file (better for production)
+pm2 start ecosystem.config.js
+
+# Monitor the process
+pm2 monit
+
+# View logs
+pm2 logs auction-flipper
+
+# Restart if needed
+pm2 restart auction-flipper
+
+# Stop the bot
+pm2 stop auction-flipper
+
+# Delete from PM2
+pm2 delete auction-flipper
+```
+
+### Alternative Methods
+
+#### Using systemd (Linux servers)
+```bash
+# Create service file
+sudo nano /etc/systemd/system/auction-flipper.service
+```
+
+#### Using screen/tmux
+```bash
+# Using screen
+screen -S auction-flipper
+npm start
+# Press Ctrl+A, D to detach
+
+# Using tmux
+tmux new -s auction-flipper
+npm start
+# Press Ctrl+B, D to detach
+```
+
+### PM2 Benefits
+- ✅ **Auto-restart** on crashes or server reboot
+- ✅ **Process monitoring** with CPU/memory usage
+- ✅ **Log management** with rotation
+- ✅ **Easy scaling** (can run multiple instances)
+- ✅ **Remote monitoring** via PM2 web interface
+
 ## ⚙️ Configuration
 
 ### Environment Variables (`.env`)
@@ -164,9 +247,24 @@ When enabled, the bot calculates material costs for:
 - **Discord errors** - Verify webhook URL and permissions
 - **Slow performance** - Reduce thread count in config
 - **API errors** - Check Hypixel API status
+- **PM2 not working** - Run `pm2 kill` then `pm2 start ecosystem.config.js`
+- **Environment not loading** - Ensure `.env` file exists and has valid values
 
-### Debug Mode
-Set `VERBOSE_LOGGING = true` in `index.js` for detailed logs.
+### PM2 Management
+```bash
+# Check if running
+pm2 status
+
+# View real-time logs
+pm2 logs auction-flipper --lines 50
+
+# Monitor resources
+pm2 monit
+
+# Auto-start on server reboot
+pm2 startup
+pm2 save
+```
 
 ## 📝 Changelog
 
